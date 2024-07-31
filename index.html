@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Options Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="title">
+        <h1>Token Options Calculator</h1>
+    </div>
+
+    <div class="containerLeft">
+        <div class="inputContainer">
+            <div>
+                <label for="tokenOptions">Token Options:</label>
+                <input type="number" id="tokenOptions" name="tokenOptions" />
+            </div>
+
+            <div>
+                <label for="fullyLapsedMonths">Fully lapsed months:</label>
+                <input type="number" id="fullyLapsedMonths" name="fullyLapsedMonths">
+            </div>
+
+            <div>
+                <label for="vestingPeriod">Vesting period:</label>
+                <input type="number" id="vestingPeriod" name="Vesting period">
+            </div>
+
+            <div>
+                <label for="vestedTokenOptions">Vested Token Options:</label>
+                <input type="number" id="vestedTokenOptions" name="vestedTokenOptions">
+            </div>
+
+            <div>
+                <label for="safePrice">Safe Price:</label>
+                <input type="number" id="safePrice" name="safePrice">
+            </div>
+
+            <div>
+                <label for="value">Value:</label>
+                <input type="number" id="Value" name="value">
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Fully Lapsed Months</th>
+                    <th>Vested Token Options</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="containerRight">
+        <canvas id="valueGraph" width="300" height="200"></canvas>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

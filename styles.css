@@ -1,0 +1,79 @@
+:root {
+    --palette-primary-background: rgba(0, 0, 0, 0.87);
+    --palette-main-green: #12FF80;
+}
+
+@font-face {
+    font-family: 'poppinsregular';
+    src: url('fonts/poppins-regular-webfont.woff') format('woff2'),
+         url('fonts/poppins-regular-webfont.woff2') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+body {
+    display: grid;
+    grid-template-columns: 2;
+    grid-template-rows: 10% auto auto;
+    height: 100vh; 
+    width: 100vw;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    font-family: 'poppinsregular';
+}
+
+.containerLeft {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 4;
+}
+
+
+.title {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+.containerRight {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 4;
+}
+
+.containerLeft, .containerRight, .title {
+    background-color: var(--palette-primary-background);
+    color: white;
+    display: grid;
+    border: 1px solid var(--palette-main-green);
+    align-items: center;
+    justify-content: center;
+
+}
+
+table {
+    border-collapse: collapse;
+    border: 2px solid var(--palette-main-green);
+    letter-spacing: 1px;
+    font-size: 0.8rem;
+}
+
+thead, tbody, tr, th {
+    border: 2px solid var(--palette-main-green);
+}
+
+canvas {
+    background-color: grey;
+    border: 2px solid var(--palette-main-green);
+    border-radius: 8px;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+}
