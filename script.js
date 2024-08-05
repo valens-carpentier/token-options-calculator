@@ -39,9 +39,15 @@ const vestedTokenOptions = document.querySelector("#vestedTokenOptions");
 const tokenFiatValueInput = document.querySelector("#tokenFiatValue");
 const btnCalculate = document.querySelector("#btnCalculate");
 
-const priceDisplay = document.createElement('p');
-const vestedTokenOptionsDisplay = document.createElement('p');
-const tokenFiatValueDisplay = document.createElement('p');
+const createDisplayElement = () => {
+    const displayElement = document.createElement('p');
+    displayElement.classList.add('display-element'); // Add class for consistent styling
+    return displayElement;
+}
+
+const priceDisplay = createDisplayElement();
+const vestedTokenOptionsDisplay = createDisplayElement();
+const tokenFiatValueDisplay = createDisplayElement();
 
 tokenPriceDisplay.appendChild(priceDisplay);
 
@@ -70,13 +76,13 @@ function getVestingPeriod() {
 }
 
 function updateDisplay() {
-    priceDisplay.textContent = safePrice;
+    priceDisplay.textContent = safePrice.toFixed(2);
 }
 
 function getvestedTokenOptions() {
     btnCalculate.addEventListener("click", function() {
             vestedTokenOptionsValue = ((tokenOptionsValue*(fullyLapsedMonthsValue**2))/(vestingPeriodValue**2));
-            vestedTokenOptionsDisplay.textContent = vestedTokenOptionsValue;
+            vestedTokenOptionsDisplay.textContent = vestedTokenOptionsValue.toFixed(0);
             vestedTokenOptions.appendChild(vestedTokenOptionsDisplay);
         }
     )};
@@ -84,10 +90,35 @@ function getvestedTokenOptions() {
 function getTokenFiatValue() {
     btnCalculate.addEventListener("click", function() {
             let tokenFiatValue = vestedTokenOptionsValue * safePrice;
-            tokenFiatValueDisplay.textContent = tokenFiatValue;
+            tokenFiatValueDisplay.textContent = tokenFiatValue.toFixed(0);
             tokenFiatValueInput.appendChild(tokenFiatValueDisplay);
         }
     )};
+
+function getVestingTable() {
+
+    tokenOptionsValue = tokenOptions.value;
+    fullyLapsedMonthsValue = fullyLapsedMonths.value;
+    vestingPeriodValue = vestingPeriod.value;
+
+    const table = document.createElement('table');
+    table.innerHTML = `<tr><th>Month</th><th>Vested Token Options</th><th>Token Fiat Value</th></tr>`;
+
+    for (let i = 1; i <= vestingPeriodValue; i++) {
+        const currentVestedTokenOptions = (tokenOptionsValue * (i ** 2)) / (vestingPeriodValue ** 2);
+        const currentTokenFiatValue = currentVestedTokenOptions * safePrice;
+
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${i}</td><td>${currentVestedTokenOptions.toFixed(2)}</td><td>${currentTokenFiatValue.toFixed(2)}</td>`;
+        table.appendChild(row);
+    }
+
+    const tableContainer = document.querySelector('#tableContainer');
+    tableContainer.innerHTML = ''; 
+    tableContainer.appendChild(table);
+
+}
+    
 
 getSafePrice().then(() => {
     updateDisplay();
@@ -97,3 +128,10 @@ getSafePrice().then(() => {
     getvestedTokenOptions();
     getTokenFiatValue();
 });
+
+document.querySelector('#btnCalculate').addEventListener('click', getVestingTable);
+
+
+/*
+Remove the click add event listener to all function, gather the event outside
+*/

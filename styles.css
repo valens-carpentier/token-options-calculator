@@ -74,6 +74,7 @@ table {
     letter-spacing: 1px;
     font-size: 0.8rem;
     margin: auto;
+    width: 100%;
 }
 
 thead, tbody, tr, th {
@@ -103,9 +104,34 @@ canvas {
     gap: 0.5rem; 
 }
 
-.tableContainer {
+.display-element {
+    border: 1px solid var(--palette-main-green);
+    background-color: white;
+    color: black;
+    margin: 0;
+    font-size: 0.75rem;
+}
+
+.inputContainer label {
+    font-size: 1rem;
+    color: white;
+}
+
+.inputContainer input {
+    font-size: 0.75rem;
+}
+
+#tableContainer {
     grid-column-start: 1;
     grid-column-end: 2;
     grid-row-start: 2;
     grid-row-end: 3;
+    height: 300px; 
+    overflow-y: auto;
+    overflow-x: auto; 
+}
+
+.inputContainer > div:last-child {
+    display: flex;
+    justify-content: center; 
 }
