@@ -36,33 +36,36 @@ const tokenOptions = document.querySelector("#tokenOptions");
 const fullyLapsedMonths = document.querySelector("#fullyLapsedMonths");
 const vestingPeriod = document.querySelector("#vestingPeriod");
 const vestedTokenOptions = document.querySelector("#vestedTokenOptions");
+const tokenFiatValueInput = document.querySelector("#tokenFiatValue");
+const btnCalculate = document.querySelector("#btnCalculate");
 
 const priceDisplay = document.createElement('p');
 const vestedTokenOptionsDisplay = document.createElement('p');
+const tokenFiatValueDisplay = document.createElement('p');
+
 tokenPriceDisplay.appendChild(priceDisplay);
 
 let tokenOptionsValue = 0;
 let fullyLapsedMonthsValue = 0;
 let vestingPeriodValue = 0;
+let vestedTokenOptionsValue = 0;
+let tokenFiatValue = 0;
 
 function getTokenOptions() {
-    document.addEventListener("keydown", function(event) {
+    document.addEventListener("input", function(event) {
         tokenOptionsValue = tokenOptions.value;
-        console.log(tokenOptionsValue);
     });
 }
 
 function getfullyLapsedMonths() {
-    document.addEventListener("keydown", function(event) {
+    document.addEventListener("input", function(event) {
         fullyLapsedMonthsValue = fullyLapsedMonths.value;
-        console.log(fullyLapsedMonthsValue);
     });
 }
 
 function getVestingPeriod() {
-    document.addEventListener("keydown", function(event) {
+    document.addEventListener("input", function(event) {
         vestingPeriodValue = vestingPeriod.value;
-        console.log(vestingPeriodValue);
     });
 }
 
@@ -71,15 +74,20 @@ function updateDisplay() {
 }
 
 function getvestedTokenOptions() {
-    document.addEventListener("keydown", function(event) {
-        if (event.key === 'Enter') {
-            let result = ((tokenOptionsValue*(fullyLapsedMonthsValue**2))/(vestingPeriodValue**2));
-            console.log(result);
-            vestedTokenOptionsDisplay.textContent = result;
+    btnCalculate.addEventListener("click", function() {
+            vestedTokenOptionsValue = ((tokenOptionsValue*(fullyLapsedMonthsValue**2))/(vestingPeriodValue**2));
+            vestedTokenOptionsDisplay.textContent = vestedTokenOptionsValue;
             vestedTokenOptions.appendChild(vestedTokenOptionsDisplay);
         }
-    });
-}
+    )};
+
+function getTokenFiatValue() {
+    btnCalculate.addEventListener("click", function() {
+            let tokenFiatValue = vestedTokenOptionsValue * safePrice;
+            tokenFiatValueDisplay.textContent = tokenFiatValue;
+            tokenFiatValueInput.appendChild(tokenFiatValueDisplay);
+        }
+    )};
 
 getSafePrice().then(() => {
     updateDisplay();
@@ -87,4 +95,5 @@ getSafePrice().then(() => {
     getfullyLapsedMonths();
     getVestingPeriod();
     getvestedTokenOptions();
+    getTokenFiatValue();
 });
