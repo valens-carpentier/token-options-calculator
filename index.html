@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Token Options Calculator</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="title">
@@ -30,7 +31,9 @@
 
             <div>
                 <label for="vestedTokenOptions">Vested Token Options:</label>
-                <div id="vestedTokenOptions"></div>
+                <div id="vestedTokenOptions">
+                    <input type="text">
+                </div>
             </div>
 
             <div>
@@ -40,7 +43,9 @@
 
             <div>
                 <label for="tokenFiatValue">Value:</label>
-                <div id="tokenFiatValue"></div>
+                <div id="tokenFiatValue">
+                    <input type="text">
+                </div>
             </div>
 
             <div>
@@ -49,6 +54,77 @@
         </div>
 
         <div id="tableContainer">
+            <table>
+                <thead>
+                    <tr>
+                      <th>Month</th>
+                      <th>Vested Token Options</th>
+                      <th>Token Fiat Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>1</th>
+                      <td>0</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <th>2</th>
+                      <td>0</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <th>3</th>
+                      <td>0</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <th>4</th>
+                      <td>0</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                        <th>5</th>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <th>6</th>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <th>7</th>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <th>8</th>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <th>9</th>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <th>10</th>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <th>11</th>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <th>12</th>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                  </tbody>
+            </table>
         </div>  
 
     </div>

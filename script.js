@@ -1,4 +1,5 @@
 let safePrice;
+let myChart = null; 
 
 async function getSafePrice() {
     const apiKey = 'CG-zPaTYWgDN5xhKZpmdfJsvmRJ';
@@ -81,6 +82,7 @@ function updateDisplay() {
 
 function getvestedTokenOptions() {
     btnCalculate.addEventListener("click", function() {
+            vestedTokenOptions.innerHTML = ''; 
             vestedTokenOptionsValue = ((tokenOptionsValue*(fullyLapsedMonthsValue**2))/(vestingPeriodValue**2));
             vestedTokenOptionsDisplay.textContent = vestedTokenOptionsValue.toFixed(0);
             vestedTokenOptions.appendChild(vestedTokenOptionsDisplay);
@@ -89,6 +91,7 @@ function getvestedTokenOptions() {
 
 function getTokenFiatValue() {
     btnCalculate.addEventListener("click", function() {
+            tokenFiatValueInput.innerHTML = ''; 
             let tokenFiatValue = vestedTokenOptionsValue * safePrice;
             tokenFiatValueDisplay.textContent = tokenFiatValue.toFixed(0);
             tokenFiatValueInput.appendChild(tokenFiatValueDisplay);
@@ -109,7 +112,7 @@ function getVestingTable() {
         const currentTokenFiatValue = currentVestedTokenOptions * safePrice;
 
         const row = document.createElement('tr');
-        row.innerHTML = `<td>${i}</td><td>${currentVestedTokenOptions.toFixed(2)}</td><td>${currentTokenFiatValue.toFixed(2)}</td>`;
+        row.innerHTML = `<td>${i}</td><td>${currentVestedTokenOptions.toFixed(0)}</td><td>${currentTokenFiatValue.toFixed(0)}</td>`;
         table.appendChild(row);
     }
 
@@ -118,7 +121,60 @@ function getVestingTable() {
     tableContainer.appendChild(table);
 
 }
-    
+
+function buildGraph() {
+    const table = document.querySelector('table');
+    const rows = table.querySelectorAll('tr'); 
+
+    const labels = [];
+    const tableTokenFiatValue = [];
+
+    rows.forEach((row, index) => {
+        if (index > 0) { 
+            const cells = row.querySelectorAll('td');
+            labels.push(cells[0].textContent);
+            tableTokenFiatValue.push(parseFloat(cells[2].textContent));
+        }
+    });
+
+    if (myChart) {
+        myChart.destroy();
+    }
+
+    const ctx = document.querySelector('#valueGraph').getContext('2d');
+    myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Token Fiat Value',
+                    data: tableTokenFiatValue,
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Month'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Value'
+                    }
+                }
+            }
+        }
+    });
+}
 
 getSafePrice().then(() => {
     updateDisplay();
@@ -129,9 +185,7 @@ getSafePrice().then(() => {
     getTokenFiatValue();
 });
 
-document.querySelector('#btnCalculate').addEventListener('click', getVestingTable);
-
-
-/*
-Remove the click add event listener to all function, gather the event outside
-*/
+document.querySelector('#btnCalculate').addEventListener('click', () => {
+    getVestingTable();
+    buildGraph();
+});

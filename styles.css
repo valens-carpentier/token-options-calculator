@@ -1,6 +1,10 @@
 :root {
     --palette-primary-background: rgba(0, 0, 0, 0.87);
     --palette-main-green: #12FF80;
+    --mui-shape-borderRadius: 6px;
+    --mui-shadows-2: none;
+    --mui-palette-primary-contrastText: rgba(0, 0, 0, 0.87);
+    --mui-palette-primary-font-weight: 500;
 }
 
 @font-face {
@@ -75,15 +79,18 @@ table {
     font-size: 0.8rem;
     margin: auto;
     width: 100%;
+    text-align: center;
 }
 
 thead, tbody, tr, th {
     border: 2px solid var(--palette-main-green);
+    padding: 0.75rem;
+    border-radius: var(--mui-shape-borderRadius);
 }
 
 canvas {
     border: 2px solid var(--palette-main-green);
-    border-radius: 8px;
+    border-radius: var(--mui-shape-borderRadius);
 }
 
 .inputContainer {
@@ -105,11 +112,18 @@ canvas {
 }
 
 .display-element {
-    border: 1px solid var(--palette-main-green);
-    background-color: white;
-    color: black;
-    margin: 0;
     font-size: 0.75rem;
+    background-color: var(--palette-main-green);
+    color: var(--mui-palette-primary-contrastText);
+    border-radius: var(--mui-shape-borderRadius);
+    font-size: 12px;
+    font-weight: var(--mui-palette-primary-font-weight);
+    border-color: var(--palette-main-green);
+    box-shadow: var(--mui-shadows-2);
+    text-align: right;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-right: 4px;
 }
 
 .inputContainer label {
@@ -119,6 +133,17 @@ canvas {
 
 .inputContainer input {
     font-size: 0.75rem;
+    background-color: var(--palette-main-green);
+    color: var(--mui-palette-primary-contrastText);
+    border-radius: var(--mui-shape-borderRadius);
+    font-size: 12px;
+    font-weight: var(--mui-palette-primary-font-weight);
+    border-color: var(--palette-main-green);
+    box-shadow: var(--mui-shadows-2);
+    text-align: right;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-right: 4px;
 }
 
 #tableContainer {
@@ -134,4 +159,21 @@ canvas {
 .inputContainer > div:last-child {
     display: flex;
     justify-content: center; 
+}
+
+#btnCalculate {
+    background-color: var(--palette-main-green);
+    color: var(--mui-palette-primary-contrastText);
+    border-radius: var(--mui-shape-borderRadius);
+    font-size: 16px;
+    font-weight: var(--mui-palette-primary-font-weight);
+    padding: 6px 16px;
+    border-color: var(--palette-main-green);
+    box-shadow: var(--mui-shadows-2);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
