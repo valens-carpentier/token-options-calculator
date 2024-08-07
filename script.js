@@ -143,14 +143,14 @@ function buildGraph() {
 
     const ctx = document.querySelector('#valueGraph').getContext('2d');
     myChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: labels,
             datasets: [
                 {
                     label: 'Token Fiat Value',
                     data: tableTokenFiatValue,
-                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderColor: 'rgba(18,255,128)',
                     borderWidth: 2,
                     fill: false
                 }

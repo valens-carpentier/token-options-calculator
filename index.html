@@ -9,42 +9,42 @@
 </head>
 <body>
     <div class="title">
-        <h1>Token Options Calculator</h1>
+        <h2>Token Options Calculator</h2>
     </div>
 
     <div class="containerLeft">
         <div class="inputContainer">
             <div>
-                <label for="tokenOptions">Token Options:</label>
-                <input type="number" id="tokenOptions" name="tokenOptions" />
+                <label for="tokenOptions">Token Options</label>
+                <input type="number" id="tokenOptions" name="tokenOptions" placeholder="Token Options" />
             </div>
 
             <div>
-                <label for="fullyLapsedMonths">Fully lapsed months:</label>
-                <input type="number" id="fullyLapsedMonths" name="fullyLapsedMonths">
+                <label for="tokenOptions">Fully lapsed months</label>
+                <input type="number" id="fullyLapsedMonths" name="fullyLapsedMonths" placeholder="Fully lapsed months">
             </div>
 
             <div>
-                <label for="vestingPeriod">Vesting period:</label>
-                <input type="number" id="vestingPeriod" name="vestingPeriod">
+                <label for="tokenOptions">Vesting period</label>
+                <input type="number" id="vestingPeriod" name="vestingPeriod" placeholder="Vesting period">
             </div>
 
             <div>
-                <label for="vestedTokenOptions">Vested Token Options:</label>
+                <label for="tokenOptions">Vested Token Options</label>
                 <div id="vestedTokenOptions">
-                    <input type="text">
+                    <input type="number" placeholder="Vested Token Options">
                 </div>
             </div>
 
             <div>
-                <label for="safePrice">Safe Price:</label>
-                <div id="safePrice"></div>
+                <label for="tokenOptions">Safe Price</label>
+                <div id="safePrice" placeholder="Safe Price"></div>
             </div>
 
             <div>
-                <label for="tokenFiatValue">Value:</label>
+                <label for="tokenOptions">Value</label>
                 <div id="tokenFiatValue">
-                    <input type="text">
+                    <input type="text" placeholder="Value">
                 </div>
             </div>
 
@@ -53,6 +53,9 @@
             </div>
         </div>
 
+    </div>
+
+    <div class="containerMiddle">
         <div id="tableContainer">
             <table>
                 <thead>
@@ -130,7 +133,7 @@
     </div>
 
     <div class="containerRight">
-        <canvas id="valueGraph" width="300" height="200"></canvas>
+        <canvas id="valueGraph"></canvas>
     </div>
 
     <script src="script.js"></script>
