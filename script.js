@@ -105,14 +105,17 @@ function getVestingTable() {
     vestingPeriodValue = vestingPeriod.value;
 
     const table = document.createElement('table');
-    table.innerHTML = `<tr><th>Month</th><th>Vested Token Options</th><th>Token Fiat Value</th></tr>`;
+    table.innerHTML = `<tr><th>Month</th><th>Vested Token Options</th><th>Value</th></tr>`;
 
     for (let i = 1; i <= vestingPeriodValue; i++) {
         const currentVestedTokenOptions = (tokenOptionsValue * (i ** 2)) / (vestingPeriodValue ** 2);
         const currentTokenFiatValue = currentVestedTokenOptions * safePrice;
 
         const row = document.createElement('tr');
-        row.innerHTML = `<td>${i}</td><td>${currentVestedTokenOptions.toFixed(0)}</td><td>${currentTokenFiatValue.toFixed(0)}</td>`;
+        row.innerHTML = `
+            <td>${i}</td>
+            <td>${currentVestedTokenOptions.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</td>
+            <td>${currentTokenFiatValue.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}</td>`;
         table.appendChild(row);
     }
 
@@ -133,7 +136,12 @@ function buildGraph() {
         if (index > 0) { 
             const cells = row.querySelectorAll('td');
             labels.push(cells[0].textContent);
-            tableTokenFiatValue.push(parseFloat(cells[2].textContent));
+
+            let fiatValueText = cells[2].textContent;
+            fiatValueText = fiatValueText.replace(/[^\d,.-]/g, '').replace(',', '.');
+                        
+            const fiatValue = parseFloat(fiatValueText);
+            tableTokenFiatValue.push(fiatValue);
         }
     });
 
@@ -148,16 +156,17 @@ function buildGraph() {
             labels: labels,
             datasets: [
                 {
-                    label: 'Token Fiat Value',
+                    label: 'Value',
                     data: tableTokenFiatValue,
                     borderColor: 'rgba(18,255,128)',
-                    borderWidth: 2,
+                    borderWidth: 1,
                     fill: false
                 }
             ]
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             scales: {
                 x: {
                     title: {

@@ -133,6 +133,8 @@ h4 {
     display: flex;
     justify-content: center;
     padding: 2rem;
+    height: 400px;
+    width: 500px;
 }
 
 .inputContainer {
@@ -245,7 +247,7 @@ label {
     grid-column-end: 2;
     grid-row-start: 2;
     grid-row-end: 3;
-    height: 300px; 
+    height: 400px; 
     overflow-y: auto;
     overflow-x: auto; 
     color: var(--color-text-primary);
@@ -265,10 +267,12 @@ table {
     background-color: var(--color-background-paper);
 }
 
-thead, tbody, tr, th {
-    border: 2px solid var(--palette-main-green);
+thead, tbody, tr, th, td {
+    border: 1px solid;
+    border-color: var(--color-border-light);
     padding: 0.75rem;
     border-radius: var(--mui-shape-borderRadius);
+    width: 10rem;
 }
 
 #btnCalculate {
@@ -291,9 +295,9 @@ thead, tbody, tr, th {
 
 canvas, #valueGraph {
     box-sizing: border-box;
-    margin-left: 10px;
-    height: 300px;
-    width: 400px;
+    height: 336px;
+    width: 436px;
+    padding: 1rem;
     color: var(--color-text-primary);
     background-color: var(--color-background-paper);
     border: 1px solid var(--color-border-main);
