@@ -42,7 +42,7 @@ const btnCalculate = document.querySelector("#btnCalculate");
 
 const createDisplayElement = () => {
     const displayElement = document.createElement('p');
-    displayElement.classList.add('display-element'); // Add class for consistent styling
+    displayElement.classList.add('display-element'); 
     return displayElement;
 }
 
