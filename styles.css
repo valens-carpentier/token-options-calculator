@@ -224,7 +224,50 @@ h4 {
 label {
     font-size: 0.75rem;
     color: white;
+    display: flex;  
+    align-items: center;  
+    gap: 0;  
+    margin: 0; 
+    padding: 0; 
+    position: relative;
 }
+
+span {
+    height: 12px;
+    width: 12px;
+    fill: var(--color-backdrop-main);
+    margin-left: 8px;
+    flex-shrink: 0;
+}
+
+span:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+#token-logo {
+    height: 12px;
+    width: 12px;
+    margin-left: 0px;
+    flex-shrink: 0;
+}
+
+.tooltip {
+    position: absolute;
+    bottom: 125%;
+    left: 100%;
+    transform: translateX(-50%);
+    background-color: var(--color-info-background);
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: var(--mui-shape-borderRadius);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 10;
+}
+
 
 .inputData, .display-element {
     font-size: 0.85rem;
@@ -236,6 +279,11 @@ label {
     padding: 2px 4px; 
     margin: 0;
 }
+
+input:focus {
+    border: none;
+    outline: none;
+  }
 
 .containerLeft > div:last-child {
     display: flex;

@@ -31,6 +31,22 @@ async function getSafePrice() {
     }
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    const tokenId = 'safe'; 
+
+    fetch(`https://api.coingecko.com/api/v3/coins/${tokenId}`)
+        .then(response => response.json())
+        .then(data => {
+            const logoUrl = data.image.small;
+            const logoElement = document.querySelector('#token-logo');
+            logoElement.src = logoUrl;
+            logoElement.alt = `${tokenId} Logo`;
+        })
+        .catch(error => {
+            console.error('Error fetching token data:', error);
+        });
+});
+
 
 const tokenPriceDisplay = document.querySelector('#safePrice'); 
 const tokenOptions = document.querySelector("#tokenOptions");
