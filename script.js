@@ -1,76 +1,75 @@
-let safePrice;
+let tokenPrice;
 let myChart = null; 
+let calculMethod;
+let tokenId = "";
 
-async function getSafePrice() {
-    const apiKey = 'CG-zPaTYWgDN5xhKZpmdfJsvmRJ';
-    const url = 'https://api.coingecko.com/api/v3/simple/price?ids=safe&vs_currencies=eur';
-    const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; 
-  
-    const options = {
-        method: 'get',
-        headers: {
-            'x-cg-demo-api-key': apiKey
-        },
-        muteHttpExceptions: true,
-    };
-  
-    try {
-        let response = await fetch(url, options);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+async function tokenDropDown() {
+    
+    const tokenIds = ['aave', 'safe','arbitrum','optimism'];
+
+    const dropdownElement = document.querySelector('#token-dropdown');
+
+    for (let tokenId of tokenIds) {
+        try {
+            const response = await fetch(`https://api.coingecko.com/api/v3/coins/${tokenId}`);
+            const data = await response.json();
+
+            const nameUrl = data.name;
+
+            let option = document.createElement("option");
+            option.text = nameUrl;
+            option.value = tokenId; 
+
+            dropdownElement.add(option);
+        } catch (error) {
+            console.error(`Error fetching data for ${tokenId}:`, error);
         }
-  
-        const data = await response.json();
-        safePrice = data.safe.eur;
-        console.log('Safe Price: ' + safePrice);
-  
-        return safePrice;
-
-    } catch (error) {
-        console.error('Error fetching the safe price:', error);
     }
 }
 
-async function getTokenLogo(){    
-    const tokenId = 'safe'; 
+function getTokenLogo() {
+    document.querySelector('#token-dropdown').addEventListener("change", function(event) {
+        
+        tokenId = event.target.value;
+        console.log(tokenId);
 
-    fetch(`https://api.coingecko.com/api/v3/coins/${tokenId}`)
-        .then(response => response.json())
-        .then(data => {
-            const logoUrl = data.image.small;
-            const logoElement = document.querySelector('#token-logo');
-            logoElement.src = logoUrl;
-            logoElement.alt = `${tokenId} Logo`;
-        })
-        .catch(error => {
-            console.error('Error fetching token data:', error);
-        });
+        fetch(`https://api.coingecko.com/api/v3/coins/${tokenId}`)
+            .then(response => response.json())
+            .then(data => {
+                
+                const logoUrl = data.image.small;
+                
+                const logoElement = document.querySelector('#token-logo');
+                logoElement.src = logoUrl;
+                logoElement.alt = `${tokenId} Logo`;
+            })
+            .catch(error => {
+                console.error('Error fetching token data:', error);
+            });
+    });
 };
 
+function getTokenPrice() {
+    document.querySelector('#token-dropdown').addEventListener("change", function(event) {
+        
+        tokenId = event.target.value;
 
-async function tokenDropDown(){    
-    const tokenId = 'bitcoin'; 
-
-    fetch(`https://api.coingecko.com/api/v3/coins/${tokenId}`)
-        .then(response => response.json())
-        .then(data => {
-            const nameUrl = data.name;
-            console.log(nameUrl);
-            const dropdownElement = document.querySelector('#token-dropdown');
-            let option = document.createElement("option");
-            dropdownElement.options = nameUrl;
-            option.text = nameUrl;
-            dropdownElement.add(option);
-
-        })
-        .catch(error => {
-            console.error('Error fetching token data:', error);
-        });
+        fetch(`https://api.coingecko.com/api/v3/coins/${tokenId}`)
+            .then(response => response.json())
+            .then(data => {
+                
+                const priceUrl = data.market_data.current_price.eur;
+                
+                tokenPrice = priceUrl;
+                updateDisplay();
+            })
+            .catch(error => {
+                console.error('Error fetching token data:', error);
+            });
+    });
 };
 
-
-
-const tokenPriceDisplay = document.querySelector('#safePrice'); 
+const tokenPriceDisplay = document.querySelector('#tokenPrice'); 
 const tokenOptions = document.querySelector("#tokenOptions");
 const fullyLapsedMonths = document.querySelector("#fullyLapsedMonths");
 const vestingPeriod = document.querySelector("#vestingPeriod");
@@ -116,22 +115,51 @@ function getVestingPeriod() {
 }
 
 function updateDisplay() {
-    priceDisplay.textContent = safePrice.toFixed(2);
+    priceDisplay.textContent = tokenPrice.toFixed(2);
 }
 
-function getvestedTokenOptions() {
+function getVestedTokenOptions() {
+
+    document.querySelector('#calculation-dropdown').addEventListener("change", function(event) {
+        calculMethod = event.target.value;
+    });
+
     btnCalculate.addEventListener("click", function() {
-            vestedTokenOptions.innerHTML = ''; 
-            vestedTokenOptionsValue = ((tokenOptionsValue*(fullyLapsedMonthsValue**2))/(vestingPeriodValue**2));
-            vestedTokenOptionsDisplay.textContent = vestedTokenOptionsValue.toFixed(0);
-            vestedTokenOptions.appendChild(vestedTokenOptionsDisplay);
+        vestedTokenOptions.innerHTML = ''; 
+
+        if (calculMethod === "exponential") {
+            vestedTokenOptionsValue = getExponentialVesting();  
+        } else if (calculMethod === "linear") {
+            vestedTokenOptionsValue = getLinearVesting(); 
+        } else if (calculMethod === "cliff") {
+            vestedTokenOptionsValue = getCliffVesting(); 
         }
-    )};
+
+        vestedTokenOptionsDisplay.textContent = vestedTokenOptionsValue.toFixed(0);
+        vestedTokenOptions.appendChild(vestedTokenOptionsDisplay);
+
+        }
+)};
+
+function getExponentialVesting() {
+        return ((tokenOptionsValue*(fullyLapsedMonthsValue**2))/(vestingPeriodValue**2));
+    }
+    
+function getLinearVesting() {
+        return ((tokenOptionsValue*fullyLapsedMonthsValue))/(vestingPeriodValue);
+    }
+    
+function getCliffVesting() {
+        let cliffPeriod = 6;
+        return ((tokenOptionsValue))/(vestingPeriodValue-cliffPeriod);
+    }
+
+
 
 function getTokenFiatValue() {
     btnCalculate.addEventListener("click", function() {
             tokenFiatValueInput.innerHTML = ''; 
-            let tokenFiatValue = vestedTokenOptionsValue * safePrice;
+            let tokenFiatValue = vestedTokenOptionsValue * tokenPrice;
             tokenFiatValueDisplay.textContent = tokenFiatValue.toFixed(0);
             tokenFiatValueInput.appendChild(tokenFiatValueDisplay);
         }
@@ -142,18 +170,38 @@ function getVestingTable() {
     tokenOptionsValue = tokenOptions.value;
     fullyLapsedMonthsValue = fullyLapsedMonths.value;
     vestingPeriodValue = vestingPeriod.value;
+    let cumulativeVestedValue = 0;
 
     const table = document.createElement('table');
     table.innerHTML = `<tr><th>Month</th><th>Vested Token Options</th><th>Value</th></tr>`;
 
+    document.querySelector('#calculation-dropdown').addEventListener("change", function(event) {
+        calculMethod = event.target.value;
+    });
+
     for (let i = 1; i <= vestingPeriodValue; i++) {
-        const currentVestedTokenOptions = (tokenOptionsValue * (i ** 2)) / (vestingPeriodValue ** 2);
-        const currentTokenFiatValue = currentVestedTokenOptions * safePrice;
+
+        if (calculMethod === "exponential") {
+            vestedTokenOptionsValue = (tokenOptionsValue * (i ** 2)) / (vestingPeriodValue ** 2);
+        } else if (calculMethod === "linear") {
+            vestedTokenOptionsValue = (tokenOptionsValue * i) / vestingPeriodValue;
+        } else if (calculMethod === "cliff") {
+            let cliffPeriod = 6;
+            if (i < cliffPeriod) {
+                vestedTokenOptionsValue = 0;
+            } else {
+                let monthlyVest = tokenOptionsValue / (vestingPeriodValue - cliffPeriod + 1);
+                cumulativeVestedValue += monthlyVest;
+                vestedTokenOptionsValue = cumulativeVestedValue;
+            }
+        }
+
+        const currentTokenFiatValue = vestedTokenOptionsValue * tokenPrice;
 
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${i}</td>
-            <td>${currentVestedTokenOptions.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</td>
+            <td>${vestedTokenOptionsValue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</td>
             <td>${currentTokenFiatValue.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}</td>`;
         table.appendChild(row);
     }
@@ -236,16 +284,20 @@ function clearData() {
     tableContainer.innerHTML = ''; 
 }
 
-getSafePrice().then(() => {
-    tokenDropDown();
+
+async function initialize() {
+    await tokenDropDown();  
+    getTokenPrice();      
     getTokenLogo();
-    updateDisplay();
     getTokenOptions();
     getfullyLapsedMonths();
     getVestingPeriod();
-    getvestedTokenOptions();
+    getVestedTokenOptions();
     getTokenFiatValue();
-});
+    updateDisplay();      
+}
+
+initialize(); 
 
 document.querySelector('#btnCalculate').addEventListener('click', () => {
     getVestingTable();
