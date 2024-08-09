@@ -98,12 +98,16 @@ img, picture, video, canvas, svg {
 h1,h4 {
     margin: 0;
 }
+
 h4 {
     border-bottom-style: solid;
     border-bottom-width: 1px;
     border-bottom-color: var(--color-border-light);
     padding-bottom: 8px;
+}
 
+.legend {
+    color: var(--color-text-primary);
 }
 
 .containerLeft {
@@ -122,7 +126,7 @@ h4 {
     grid-column-start: 2;
     grid-column-end: 3;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     padding: 2rem;
 }
 
@@ -131,6 +135,7 @@ h4 {
     grid-column-end: 4;
     color: white;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     padding: 2rem;
     height: 400px;
@@ -285,11 +290,6 @@ input:focus {
     outline: none;
   }
 
-.containerLeft > div:last-child {
-    display: flex;
-    justify-content: center; 
-}
-
 #tableContainer {
     grid-column-start: 1;
     grid-column-end: 2;
@@ -323,7 +323,7 @@ thead, tbody, tr, th, td {
     width: 10rem;
 }
 
-#btnCalculate {
+#btnCalculate, #btnClear {
     background-color: var(--color-primary-main);
     color: var(--color-background-default);
     border-radius: var(--mui-shape-borderRadius);
@@ -334,13 +334,30 @@ thead, tbody, tr, th, td {
     padding: 12px 48px;
     border-color: var(--color-primary-dark);
     box-shadow: var(--mui-shadows-2);
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 4;
-    grid-row-end: 5;
-    align-items: center;
 }
 
+#btnClear {
+    background-color: var(--color-background-default);
+    color: var(--color-primary-main);
+    border-color: var(--color-primary-main);
+    border-style: solid;
+    border-width: 2px;
+    border-radius: var(--mui-shape-borderRadius);
+    font-weight: bold;
+    font-family: 'dm';
+    font-size: 0.875rem;
+    padding: 12px 48px;
+    box-shadow: var(--mui-shadows-2);
+}
+
+.buttonContainer {
+    display: flex; 
+    flex-direction: row;
+    justify-content: space-between;
+    box-sizing: border-box;
+    gap: 24px;
+    padding: 8px;
+}
 canvas, #valueGraph {
     box-sizing: border-box;
     height: 336px;
@@ -350,6 +367,14 @@ canvas, #valueGraph {
     background-color: var(--color-background-paper);
     border: 1px solid var(--color-border-main);
     border-radius: var(--mui-shape-borderRadius);
+    position: absolute;
+}
+
+#no-data {
+    display: none;
+    text-align: center;
+    font-size: 1.5em;
+    color: #999;
 }
 
 

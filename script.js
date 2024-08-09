@@ -31,7 +31,7 @@ async function getSafePrice() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+async function getTokenLogo(){    
     const tokenId = 'safe'; 
 
     fetch(`https://api.coingecko.com/api/v3/coins/${tokenId}`)
@@ -45,7 +45,29 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => {
             console.error('Error fetching token data:', error);
         });
-});
+};
+
+
+async function tokenDropDown(){    
+    const tokenId = 'bitcoin'; 
+
+    fetch(`https://api.coingecko.com/api/v3/coins/${tokenId}`)
+        .then(response => response.json())
+        .then(data => {
+            const nameUrl = data.name;
+            console.log(nameUrl);
+            const dropdownElement = document.querySelector('#token-dropdown');
+            let option = document.createElement("option");
+            dropdownElement.options = nameUrl;
+            option.text = nameUrl;
+            dropdownElement.add(option);
+
+        })
+        .catch(error => {
+            console.error('Error fetching token data:', error);
+        });
+};
+
 
 
 const tokenPriceDisplay = document.querySelector('#safePrice'); 
@@ -55,6 +77,7 @@ const vestingPeriod = document.querySelector("#vestingPeriod");
 const vestedTokenOptions = document.querySelector("#vestedTokenOptions");
 const tokenFiatValueInput = document.querySelector("#tokenFiatValue");
 const btnCalculate = document.querySelector("#btnCalculate");
+const btnClear = document.querySelector('#btnClear');
 
 const createDisplayElement = () => {
     const displayElement = document.createElement('p');
@@ -201,7 +224,21 @@ function buildGraph() {
     });
 }
 
+function clearData() {
+    tokenOptions.value = null;
+    fullyLapsedMonths.value = null;
+    vestingPeriod.value = null;
+    vestedTokenOptions.innerHTML = ""; 
+    tokenFiatValueInput.innerHTML = "";
+    if (myChart) {
+        myChart.destroy();
+    }
+    tableContainer.innerHTML = ''; 
+}
+
 getSafePrice().then(() => {
+    tokenDropDown();
+    getTokenLogo();
     updateDisplay();
     getTokenOptions();
     getfullyLapsedMonths();
@@ -213,4 +250,8 @@ getSafePrice().then(() => {
 document.querySelector('#btnCalculate').addEventListener('click', () => {
     getVestingTable();
     buildGraph();
+});
+
+document.querySelector('#btnClear').addEventListener('click', () => {
+    clearData();
 });

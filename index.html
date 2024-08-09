@@ -60,6 +60,9 @@
                     <span class="logoContainer">
                         <img id="token-logo" alt="Token Logo" style="max-width: 200px">
                     </span>
+                    <span class="dropdownContainer">
+                        <select name="Tokens" id="token-dropdown"></select>
+                    </span>
                 </label>
                 <div id="safePrice"></div>
             </div>
@@ -93,90 +96,21 @@
 
         </div>
 
-            <div>
+            <div class="buttonContainer">
+                <button id="btnClear">Clear</button>
                 <button id="btnCalculate">Calculate</button>
             </div>
         </div>
 
     <div class="containerMiddle">
         <div id="tableContainer">
-            <table>
-                <thead>
-                    <tr>
-                      <th>Month</th>
-                      <th>Vested Token Options</th>
-                      <th>Value</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th>1</th>
-                      <td>0</td>
-                      <td>0</td>
-                    </tr>
-                    <tr>
-                      <th>2</th>
-                      <td>0</td>
-                      <td>0</td>
-                    </tr>
-                    <tr>
-                      <th>3</th>
-                      <td>0</td>
-                      <td>0</td>
-                    </tr>
-                    <tr>
-                      <th>4</th>
-                      <td>0</td>
-                      <td>0</td>
-                    </tr>
-                    <tr>
-                        <th>5</th>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <th>6</th>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <th>7</th>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <th>8</th>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <th>9</th>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <th>10</th>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <th>11</th>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <th>12</th>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                  </tbody>
-            </table>
         </div>  
 
     </div>
 
     <div class="containerRight">
         <canvas id="valueGraph"></canvas>
+        <div id="no-data">No data available</div>
     </div>
 
     </div>
