@@ -25,6 +25,28 @@ async function tokenDropDown() {
             console.error(`Error fetching data for ${tokenId}:`, error);
         }
     }
+
+    // Set the default selected token and fetch its price
+    dropdownElement.value = tokenIds[0];
+    await fetchInitialTokenPrice(tokenIds[0]);
+}
+
+async function fetchInitialTokenPrice(initialTokenId) {
+    try {
+        const response = await fetch(`https://api.coingecko.com/api/v3/coins/${initialTokenId}`);
+        const data = await response.json();
+        
+        tokenPrice = data.market_data.current_price.eur;
+        updateDisplay();
+
+        // Update the logo as well
+        const logoUrl = data.image.small;
+        const logoElement = document.querySelector('#token-logo');
+        logoElement.src = logoUrl;
+        logoElement.alt = `${initialTokenId} Logo`;
+    } catch (error) {
+        console.error('Error fetching initial token data:', error);
+    }
 }
 
 function getTokenLogo() {
@@ -294,7 +316,7 @@ async function initialize() {
     getVestingPeriod();
     getVestedTokenOptions();
     getTokenFiatValue();
-    updateDisplay();      
+    // Remove updateDisplay() from here as it's now called in fetchInitialTokenPrice()
 }
 
 initialize(); 
