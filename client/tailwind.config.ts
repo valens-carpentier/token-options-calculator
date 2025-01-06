@@ -11,6 +11,10 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        primary: "var(--primary)",
+        'primary-disabled': "var(--primary-disabled)",
+        border: "var(--border)",
+        hover: "var(--hover)",
       },
     },
   },

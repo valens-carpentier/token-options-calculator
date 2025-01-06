@@ -1,4 +1,5 @@
 import { VestingCalculation } from '../types/index';
+import '../app/styles/globals.css';
 
 interface VestingFormProps {
   calculation: VestingCalculation;
@@ -15,7 +16,6 @@ export default function VestingForm({ calculation, onCalculationChange }: Vestin
 
   return (
     <div className="inputContainer">
-      <h4>Your options</h4>
       <div>
         <label htmlFor="tokenOptions">Token options</label>
         <input
@@ -61,7 +61,6 @@ export default function VestingForm({ calculation, onCalculationChange }: Vestin
         >
           <option value="exponential">Exponential</option>
           <option value="linear">Linear</option>
-          <option value="cliff">Cliff</option>
         </select>
       </div>
     </div>

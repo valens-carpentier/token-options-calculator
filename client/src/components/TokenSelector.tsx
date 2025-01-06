@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { TokenData } from '../types/index';
+import '../app/styles/globals.css';
 
 interface TokenSelectorProps {
   onTokenSelect: (tokenId: string) => void;
@@ -29,14 +30,14 @@ export default function TokenSelector({ onTokenSelect, tokenData }: TokenSelecto
               <Image
                 src={tokenData.image.small}
                 alt={`${tokenData.name} Logo`}
-                width={32}
-                height={32}
+                width={24}
+                height={24}
               />
             </span>
           )}
         </label>
         <div id="tokenPrice">
-          {tokenData?.current_price?.toFixed(2) ?? '0.00'}
+          {`${tokenData?.current_price?.toFixed(2) ?? '0.00'}€`}
         </div>
       </div>
     </div>

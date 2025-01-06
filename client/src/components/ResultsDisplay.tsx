@@ -12,6 +12,7 @@ import { Chart } from 'chart.js';
 import { useEffect, useRef } from 'react';
 import { TokenData, VestingCalculation } from '../types/index';
 import { calculateVestedTokens, generateVestingSchedule } from '../utils/calculations';
+import '../app/styles/globals.css';
 
 // Register the required components
 ChartJS.register(
@@ -65,25 +66,52 @@ export default function ResultsDisplay({ calculation, tokenData }: ResultsDispla
         datasets: [{
           label: 'Value (EUR)',
           data: vestingSchedule.map(item => item.value),
-          backgroundColor: 'rgba(18, 255, 128, 0.5)',
-          borderColor: 'rgba(18, 255, 128, 1)',
-          borderWidth: 1
+          backgroundColor: 'rgba(105, 154, 70, 0.5)',
+          borderColor: 'rgba(105, 154, 70, 1)',
+          borderWidth: 1,
+          borderRadius: 8
         }]
       },
       options: {
         responsive: true,
+        plugins: {
+          legend: {
+            labels: {
+              color: getComputedStyle(document.documentElement)
+                .getPropertyValue('--foreground')
+            }
+          }
+        },
         scales: {
           y: {
             beginAtZero: true,
+            grid: {
+              color: 'rgba(105, 154, 70, 0.1)'
+            },
+            ticks: {
+              color: getComputedStyle(document.documentElement)
+                .getPropertyValue('--foreground')
+            },
             title: {
               display: true,
-              text: 'Value (EUR)'
+              text: 'Value (EUR)',
+              color: getComputedStyle(document.documentElement)
+                .getPropertyValue('--foreground')
             }
           },
           x: {
+            grid: {
+              color: 'rgba(105, 154, 70, 0.1)'
+            },
+            ticks: {
+              color: getComputedStyle(document.documentElement)
+                .getPropertyValue('--foreground')
+            },
             title: {
               display: true,
-              text: 'Months'
+              text: 'Months',
+              color: getComputedStyle(document.documentElement)
+                .getPropertyValue('--foreground')
             }
           }
         }
@@ -99,8 +127,6 @@ export default function ResultsDisplay({ calculation, tokenData }: ResultsDispla
 
   return (
     <div className="resultContainer">
-      <h4>Total future token value</h4>
-      
       <div>
         <label>Vested token options</label>
         <div className="inputData">
@@ -120,9 +146,9 @@ export default function ResultsDisplay({ calculation, tokenData }: ResultsDispla
 
       <div className="vestingSchedule">
         <h4>Vesting Schedule</h4>
-        <div className="tableContainer">
+        <div className="tableContainer max-h-[250px] overflow-y-auto">
           <table>
-            <thead>
+            <thead className="sticky top-0 bg-background z-10">
               <tr>
                 <th>Month</th>
                 <th>Vested Tokens</th>
@@ -145,7 +171,7 @@ export default function ResultsDisplay({ calculation, tokenData }: ResultsDispla
             </tbody>
           </table>
         </div>
-        
+        <h4>Vesting Graph</h4>
         <div className="graphContainer">
           <canvas ref={chartRef} />
         </div>

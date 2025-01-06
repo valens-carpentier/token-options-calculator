@@ -13,7 +13,7 @@ export interface VestingCalculation {
   tokenOptions: number;
   fullyLapsedMonths: number;
   vestingPeriod: number;
-  calculationMethod: 'linear' | 'exponential' | 'cliff';
+  calculationMethod: 'exponential' | 'linear';
 }
 
 export interface CalculationResult {
