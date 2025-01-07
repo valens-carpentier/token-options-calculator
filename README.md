@@ -12,7 +12,6 @@ A webpage to help calculate the value of your token options depending on market 
   - Exponential vesting
 - Interactive vesting schedule visualization
 - Detailed monthly breakdown table
-- Responsive design with a clean, modern interface
 
 ## Tech Stack
 
